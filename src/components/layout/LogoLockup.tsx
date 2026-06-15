@@ -9,7 +9,7 @@ export function LogoLockup({ inverted = false }: LogoLockupProps) {
   return (
     <a
       aria-label="One World United home"
-      className="flex items-center focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2"
+      className="flex items-center focus:outline-none"
       href="#/"
     >
       <img

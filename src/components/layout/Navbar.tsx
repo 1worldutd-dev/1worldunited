@@ -72,7 +72,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-md" id="home">
-      <Container className="flex h-16 items-center justify-between gap-4">
+      <Container className="relative flex h-16 items-center justify-between gap-4">
         <LogoLockup />
         
         {/* Desktop Navigation */}
@@ -81,14 +81,14 @@ export function Navbar() {
             if (item.label === 'Services') {
               return (
                 <div 
-                  className="relative" 
+                  className="" 
                   key={item.label}
                   ref={dropdownRef}
                 >
                   <button
                     aria-expanded={dropdownOpen}
                     aria-haspopup="true"
-                    className="flex items-center gap-1.5 font-mono text-sm font-bold uppercase tracking-[0.12em] text-ink transition hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                    className="flex items-center gap-1.5 font-mono text-sm font-bold uppercase tracking-[0.12em] text-ink transition hover:text-brand-blue focus:outline-none"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     type="button"
                   >
@@ -102,10 +102,10 @@ export function Navbar() {
                   {/* Dropdown Mega Menu Card */}
                   {dropdownOpen && (
                     <div 
-                      className="absolute left-1/2 top-full mt-2 w-[920px] -translate-x-[72%] border border-line bg-white p-6 shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-top-2 z-50"
+                      className="absolute left-1/2 top-full mt-2 w-[calc(100vw-3rem)] max-w-[920px] -translate-x-1/2 border border-line bg-white p-6 shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-top-2 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto"
                       role="menu"
                     >
-                      <div className="grid grid-cols-4 gap-6">
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                         {/* Column 1: Mechanical & Fluid */}
                         <div>
                           <h4 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red border-b border-line pb-2 mb-3">
@@ -222,7 +222,7 @@ export function Navbar() {
 
             return (
               <a
-                className="relative font-mono text-sm font-bold uppercase tracking-[0.12em] text-ink transition hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2"
+                className="relative font-mono text-sm font-bold uppercase tracking-[0.12em] text-ink transition hover:text-brand-blue focus:outline-none"
                 href={item.href}
                 key={item.label}
                 onClick={(e) => handleNavClick(e, item.href)}
@@ -238,7 +238,7 @@ export function Navbar() {
           aria-controls="mobile-menu"
           aria-expanded={mobileOpen}
           aria-label="Toggle navigation"
-          className="grid size-10 place-items-center border border-line text-ink focus:outline-none focus:ring-2 focus:ring-brand-blue md:hidden"
+          className="grid size-10 place-items-center border border-line text-ink focus:outline-none md:hidden"
           onClick={() => setMobileOpen((value) => !value)}
           type="button"
         >
@@ -270,7 +270,7 @@ export function Navbar() {
                       />
                     </button>
                     {mobileDropdownOpen && (
-                      <div className="pl-4 grid gap-4 border-l-2 border-brand-blue/30 bg-surface-muted/30 mt-1 py-2 max-h-[50vh] overflow-y-auto">
+                      <div className="pl-4 grid gap-4 border-l-2 border-brand-blue/30 bg-surface-muted/30 mt-1 py-2">
                         {/* Group 1: Mechanical & Fluid */}
                         <div>
                           <h5 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red mb-1 border-b border-line/20 pb-0.5">

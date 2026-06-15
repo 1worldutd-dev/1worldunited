@@ -31,21 +31,39 @@ export function PortfolioSection() {
             <Reveal delay={index * 0.08} key={item.title}>
               <a
                 href={portfolioLinks[item.title] || '#/'}
-                className="group block relative overflow-hidden bg-surface-muted focus:outline-none focus:ring-2 focus:ring-brand-blue border border-line"
+                className="group block relative overflow-hidden bg-brand-black focus:outline-none border border-line"
               >
                 <article aria-label={`${item.title}: ${item.description}`}>
                   <img
                     alt={item.alt}
-                    className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="aspect-[4/5] w-full object-cover opacity-40 transition-all duration-500 group-hover:scale-105 group-hover:opacity-20"
                     height="650"
                     loading="lazy"
                     src={item.image}
                     width="520"
                   />
-                  <div className="absolute inset-x-0 bottom-0 translate-y-full bg-brand-black/90 p-6 text-white transition-transform duration-300 group-hover:translate-y-0 group-focus:translate-y-0">
+                  {/* Default Flat Black Overlay matching Hero Background */}
+                  <div className="absolute inset-0 bg-brand-black/75 transition-opacity duration-300 group-hover:opacity-0 z-10" />
+
+                  {/* Default Title (Always visible, fades out on hover) */}
+                  <div className="absolute inset-x-0 bottom-0 p-6 z-20 text-white transition-all duration-300 group-hover:opacity-0 group-hover:translate-y-2">
+                    <span className="font-mono text-sm font-bold uppercase text-brand-red tracking-wider block mb-1">
+                      Service {`0${index + 1}`}
+                    </span>
                     <h3 className="font-display text-2xl uppercase leading-none">{item.title}</h3>
-                    <p className="mt-3 font-body text-sm leading-5 text-white/75">{item.description}</p>
-                    <span className="inline-block mt-4 font-mono text-sm font-bold uppercase tracking-wider text-brand-blue group-hover:text-white transition-colors">
+                    <span className="inline-block mt-3 font-mono text-sm font-bold uppercase tracking-wider text-brand-blue">
+                      View Specs →
+                    </span>
+                  </div>
+
+                  {/* Hover Panel (Slides up with solid high-contrast dark background) */}
+                  <div className="absolute inset-0 bg-brand-black/95 p-6 text-white transition-transform duration-300 translate-y-full group-hover:translate-y-0 z-30 flex flex-col justify-end">
+                    <span className="font-mono text-sm font-bold uppercase text-brand-red tracking-wider block mb-2">
+                      Service {`0${index + 1}`}
+                    </span>
+                    <h3 className="font-display text-2xl uppercase leading-none text-white mb-2">{item.title}</h3>
+                    <p className="font-body text-sm leading-5 text-white/85 mb-4">{item.description}</p>
+                    <span className="inline-block font-mono text-sm font-bold uppercase tracking-wider text-brand-blue transition-colors group-hover:text-white">
                       Learn More & Specs →
                     </span>
                   </div>

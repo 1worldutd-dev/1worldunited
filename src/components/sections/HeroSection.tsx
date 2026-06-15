@@ -10,10 +10,10 @@ export function HeroSection() {
         <img 
           src={heroBg} 
           alt="Kuwait Skyline at Sunset" 
-          className="w-full h-full object-cover object-top opacity-75"
+          className="w-full h-full object-cover object-top opacity-40"
         />
         {/* Black Tint Overlay */}
-        <div className="absolute inset-0 bg-brand-black/60" />
+        <div className="absolute inset-0 bg-brand-black/75" />
       </div>
 
       <Container className="relative z-10 flex min-h-[330px] flex-col items-center justify-center py-24 text-center sm:min-h-[470px] sm:py-32 lg:min-h-[620px]">

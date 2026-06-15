@@ -50,7 +50,7 @@ export function PartnerStrip() {
                 <img
                   src={logo}
                   alt={`Partner logo ${index % partnerLogos.length + 1}`}
-                  className="h-9 sm:h-12 w-auto object-contain grayscale opacity-45 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none pointer-events-none"
+                  className="h-9 sm:h-12 w-auto object-contain opacity-90 hover:opacity-100 transition-all duration-300 select-none pointer-events-none"
                   loading="lazy"
                 />
               </div>

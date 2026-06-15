@@ -39,7 +39,7 @@ export function ServicesSection() {
                 <button
                   aria-controls={panelId}
                   aria-expanded={isOpen}
-                  className="grid w-full grid-cols-[3rem_1fr_auto] items-center py-7 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-blue"
+                  className="grid w-full grid-cols-[3rem_1fr_auto] items-center py-7 text-left focus:outline-none"
                   onClick={() => setOpenServiceId(isOpen ? null : service.id)}
                   type="button"
                 >
