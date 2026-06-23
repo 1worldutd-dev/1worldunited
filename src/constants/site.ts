@@ -86,6 +86,13 @@ export const dropdownServices = [
     description: 'Intumescent fireproofing, dry ice blasting, MICC cabling, and architectural fit-outs.',
     category: 'Industrial Services'
   },
+  { 
+    id: '10', 
+    title: 'Visual Merchandising Services', 
+    href: '#/services/visual-merchandising',
+    description: 'Retail printing, brand experiences, custom fixtures, and shop-in-shop execution.',
+    category: 'Retail & Marketing'
+  },
 ]
 
 export const stats: Stat[] = [
@@ -149,7 +156,14 @@ export const services: Service[] = [
     description:
       'Providing intumescent passive fire protection (PFP), non-abrasive CO2 dry ice blasting, high-reliability MICC cabling, turnaround maintenance, and control room civil fit-outs.',
   },
+  {
+    id: '10',
+    title: 'Visual Merchandising Services',
+    description:
+      'Turnkey retail environments, large-format printing, brand experience pop-ups, custom display fixtures, shop-in-shop execution, and visual campaign installations.',
+  },
 ]
+
 
 export const portfolioItems: PortfolioItem[] = [
   {

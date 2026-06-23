@@ -10,6 +10,7 @@ import { BatteryStoragePage } from './pages/services/BatteryStoragePage'
 import { HeatExchangersPage } from './pages/services/HeatExchangersPage'
 import { ElectricalInstrumentationPage } from './pages/services/ElectricalInstrumentationPage'
 import { SpecializedServicesPage } from './pages/services/SpecializedServicesPage'
+import { VisualMerchandisingPage } from './pages/services/VisualMerchandisingPage'
 
 export default function App() {
   const [hash] = useHashLocation()
@@ -64,6 +65,9 @@ export default function App() {
   }
   if (hash.startsWith('#/services/specialized-services')) {
     return <SpecializedServicesPage />
+  }
+  if (hash.startsWith('#/services/visual-merchandising')) {
+    return <VisualMerchandisingPage />
   }
 
   // Default to Home page

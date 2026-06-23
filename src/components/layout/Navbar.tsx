@@ -8,7 +8,16 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false)
+  const [activeCategoryId, setActiveCategoryId] = useState<string>('mechanical')
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const categories = [
+    { id: 'mechanical', label: 'Mechanical & Fluid', filter: (s: any) => s.category === 'Mechanical & Fluid Systems' },
+    { id: 'technical', label: 'Technical Rooms', filter: (s: any) => s.category === 'Technical Environments' },
+    { id: 'building', label: 'Advanced Building', filter: (s: any) => s.category === 'Advanced Building Tech' },
+    { id: 'power_industrial', label: 'Power & Industrial', filter: (s: any) => s.category === 'Power & Electrical Systems' || s.category === 'Industrial Services' },
+    { id: 'retail', label: 'Retail & Marketing', filter: (s: any) => s.category === 'Retail & Marketing' },
+  ]
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -89,7 +98,10 @@ export function Navbar() {
                     aria-expanded={dropdownOpen}
                     aria-haspopup="true"
                     className="flex items-center gap-1.5 font-mono text-sm font-bold uppercase tracking-[0.12em] text-ink transition hover:text-brand-blue focus:outline-none"
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    onClick={() => {
+                      setDropdownOpen(!dropdownOpen)
+                      setActiveCategoryId('mechanical')
+                    }}
                     type="button"
                   >
                     Services
@@ -102,112 +114,56 @@ export function Navbar() {
                   {/* Dropdown Mega Menu Card */}
                   {dropdownOpen && (
                     <div 
-                      className="absolute left-1/2 top-full mt-2 w-[calc(100vw-3rem)] max-w-[920px] -translate-x-1/2 border border-line bg-white p-6 shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-top-2 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto"
+                      className="absolute left-1/2 top-full mt-2 w-[calc(100vw-3rem)] max-w-[860px] -translate-x-1/2 border border-line bg-white shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-top-2 z-50 overflow-hidden"
                       role="menu"
                     >
-                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                        {/* Column 1: Mechanical & Fluid */}
-                        <div>
-                          <h4 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red border-b border-line pb-2 mb-3">
-                            Mechanical & Fluid
-                          </h4>
-                          <div className="grid gap-3">
-                            {dropdownServices
-                              .filter((s) => s.category === 'Mechanical & Fluid Systems')
-                              .map((service) => (
-                                <a
-                                  className="group flex flex-col gap-0.5 p-1.5 transition hover:bg-surface-muted focus:outline-none focus:bg-surface-muted rounded"
-                                  href={service.href}
-                                  key={service.id}
-                                  role="menuitem"
-                                  onClick={() => setDropdownOpen(false)}
-                                >
-                                  <span className="font-display text-base uppercase tracking-wide text-ink group-hover:text-brand-blue transition-colors">
-                                    {service.title}
-                                  </span>
-                                  <span className="font-body text-sm text-ink-muted leading-tight">
-                                    {service.description}
-                                  </span>
-                                </a>
-                              ))}
-                          </div>
+                      <div className="flex min-h-[280px]">
+                        {/* Categories Sidebar */}
+                        <div className="w-[260px] bg-surface-muted/30 border-r border-line p-3 flex flex-col gap-1">
+                          {categories.map((cat) => {
+                            const isActive = activeCategoryId === cat.id
+                            return (
+                              <button
+                                key={cat.id}
+                                onMouseEnter={() => setActiveCategoryId(cat.id)}
+                                onClick={() => setActiveCategoryId(cat.id)}
+                                className={`w-full text-left px-4 py-3 border-l-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-between rounded-r ${
+                                  isActive
+                                    ? 'border-brand-blue bg-surface-muted text-brand-blue'
+                                    : 'border-transparent text-ink-muted hover:text-ink hover:bg-surface-muted/30'
+                                }`}
+                                type="button"
+                              >
+                                <span>{cat.label}</span>
+                                <span className={`text-brand-blue transition-transform duration-200 ${isActive ? 'translate-x-1 opacity-100' : 'opacity-0'}`}>
+                                  →
+                                </span>
+                              </button>
+                            )
+                          })}
                         </div>
 
-                        {/* Column 2: Technical Environments */}
-                        <div>
-                          <h4 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red border-b border-line pb-2 mb-3">
-                            Technical Rooms
+                        {/* Services List Panel */}
+                        <div className="flex-1 p-6 bg-white">
+                          <h4 className="font-mono text-[11px] font-bold uppercase tracking-widest text-brand-red border-b border-line pb-2 mb-4">
+                            {categories.find(c => c.id === activeCategoryId)?.label} Services
                           </h4>
-                          <div className="grid gap-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             {dropdownServices
-                              .filter((s) => s.category === 'Technical Environments')
+                              .filter(categories.find(c => c.id === activeCategoryId)?.filter || (() => false))
                               .map((service) => (
                                 <a
-                                  className="group flex flex-col gap-0.5 p-1.5 transition hover:bg-surface-muted focus:outline-none focus:bg-surface-muted rounded"
+                                  className="group flex items-center justify-between p-3.5 border border-line hover:border-brand-blue hover:bg-surface-muted rounded transition-all duration-200"
                                   href={service.href}
                                   key={service.id}
                                   role="menuitem"
                                   onClick={() => setDropdownOpen(false)}
                                 >
-                                  <span className="font-display text-base uppercase tracking-wide text-ink group-hover:text-brand-blue transition-colors">
+                                  <span className="font-display text-sm uppercase tracking-wide text-ink group-hover:text-brand-blue transition-colors">
                                     {service.title}
                                   </span>
-                                  <span className="font-body text-sm text-ink-muted leading-tight">
-                                    {service.description}
-                                  </span>
-                                </a>
-                              ))}
-                          </div>
-                        </div>
-
-                        {/* Column 3: Advanced Building Tech */}
-                        <div>
-                          <h4 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red border-b border-line pb-2 mb-3">
-                            Advanced Building
-                          </h4>
-                          <div className="grid gap-3">
-                            {dropdownServices
-                              .filter((s) => s.category === 'Advanced Building Tech')
-                              .map((service) => (
-                                <a
-                                  className="group flex flex-col gap-0.5 p-1.5 transition hover:bg-surface-muted focus:outline-none focus:bg-surface-muted rounded"
-                                  href={service.href}
-                                  key={service.id}
-                                  role="menuitem"
-                                  onClick={() => setDropdownOpen(false)}
-                                >
-                                  <span className="font-display text-base uppercase tracking-wide text-ink group-hover:text-brand-blue transition-colors">
-                                    {service.title}
-                                  </span>
-                                  <span className="font-body text-sm text-ink-muted leading-tight">
-                                    {service.description}
-                                  </span>
-                                </a>
-                              ))}
-                          </div>
-                        </div>
-
-                        {/* Column 4: Power & Industrial Services */}
-                        <div>
-                          <h4 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red border-b border-line pb-2 mb-3">
-                            Power & Services
-                          </h4>
-                          <div className="grid gap-3">
-                            {dropdownServices
-                              .filter((s) => s.category === 'Power & Electrical Systems' || s.category === 'Industrial Services')
-                              .map((service) => (
-                                <a
-                                  className="group flex flex-col gap-0.5 p-1.5 transition hover:bg-surface-muted focus:outline-none focus:bg-surface-muted rounded"
-                                  href={service.href}
-                                  key={service.id}
-                                  role="menuitem"
-                                  onClick={() => setDropdownOpen(false)}
-                                >
-                                  <span className="font-display text-base uppercase tracking-wide text-ink group-hover:text-brand-blue transition-colors">
-                                    {service.title}
-                                  </span>
-                                  <span className="font-body text-sm text-ink-muted leading-tight">
-                                    {service.description}
+                                  <span className="text-brand-blue opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 font-mono text-sm font-bold">
+                                    →
                                   </span>
                                 </a>
                               ))}
@@ -343,13 +299,37 @@ export function Navbar() {
                             ))}
                         </div>
 
-                        {/* Group 4: Power & Industrial Services */}
+                        {/* Group 4: Power & Industrial */}
                         <div>
                           <h5 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red mb-1 border-b border-line/20 pb-0.5">
-                            Power & Services
+                            Power & Industrial
                           </h5>
                           {dropdownServices
                             .filter((s) => s.category === 'Power & Electrical Systems' || s.category === 'Industrial Services')
+                            .map((service) => (
+                              <a
+                                className="flex flex-col py-2"
+                                href={service.href}
+                                key={service.id}
+                                onClick={() => {
+                                  setMobileOpen(false)
+                                  setMobileDropdownOpen(false)
+                                }}
+                              >
+                                <span className="font-display text-sm uppercase tracking-wide text-ink">
+                                  {service.title}
+                                </span>
+                              </a>
+                            ))}
+                        </div>
+
+                        {/* Group 5: Retail & Marketing */}
+                        <div>
+                          <h5 className="font-mono text-sm font-bold uppercase tracking-widest text-brand-red mb-1 border-b border-line/20 pb-0.5">
+                            Retail & Marketing
+                          </h5>
+                          {dropdownServices
+                            .filter((s) => s.category === 'Retail & Marketing')
                             .map((service) => (
                               <a
                                 className="flex flex-col py-2"

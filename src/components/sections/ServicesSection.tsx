@@ -16,6 +16,7 @@ const serviceLinks: Record<string, string> = {
   '07': '#/services/heat-exchangers',
   '08': '#/services/electrical-instrumentation',
   '09': '#/services/specialized-services',
+  '10': '#/services/visual-merchandising',
 }
 
 export function ServicesSection() {
